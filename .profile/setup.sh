@@ -1,13 +1,16 @@
 #!bash
+
 for PROFILE in "/workspaces/*/.profile"; do
 
-echo RUNNING SETUP for $REPO
-if [ -f $PROFILE/bashrc ]; then
-   echo SETTING UP BASHRC
-   mv ~/.bashrc ~/.bashrc.bk || echo previous bashrc
-   mv ~/.bash_history ~/.bash_history.bk || echo no previous hist
-   ln -s $PROFILE/bashrc ~/.bashrc || echo FAILED_LINK_BASHRC
-   ln -s $PROFILE/bash_history ~/.bash_history || echo FAILED_LINK_BASH_HISTORY
+if [[ $(hostname -s) = codespaces-* ]]; then
+   echo RUNNING CODESPACES SETUP for $REPO
+   if [ -f $PROFILE/bashrc ]; then
+      echo SETTING UP BASHRC
+      mv ~/.bashrc ~/.bashrc.bk || echo NO PREVIOUS .bashrc
+      mv ~/.bash_history ~/.bash_history.bk || echo NO PREVIOUS .bash_history
+      ln -s $PROFILE/bashrc ~/.bashrc || echo FAILED LINK .bashrc
+      ln -s $PROFILE/bash_history ~/.bash_history || echo FAILED LINK .bash_history
+   fi
 fi
 
 done
